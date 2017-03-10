@@ -1,0 +1,375 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <!---
+  	<meta http-equiv="Content-Security-Policy" content="
+		default-src 'self' 'unsafe-inline' ws://192.168.1.123:3000 http://code.jquery.com https://code.jquery.com  https://ssl.gstatic.com gap: data: blob: filesystem: ;
+	" />
+	--->
+    <link rel="stylesheet"
+    href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+	<script
+	src="https://code.jquery.com/jquery-2.1.4.js"
+	integrity="sha256-siFczlgw4jULnUICcdm9gjQPZkw/YPDqhQ9+nAOScE4="
+	crossorigin="anonymous"></script>
+
+	<script>
+        $(document).on("mobileinit", function () {
+           // $.mobile.defaultPageTransition = "flip";
+        });
+    </script>
+	<script
+    src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+    <title>Mobiiliohjelmointi</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height:500px;
+        width:500px;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+</head>
+
+<body>
+
+	<div data-role="popup" id="popupMenu" data-transition="pop" data-theme="a">
+		<a href="#" data-rel="back" class="ui-btn ui-btn-inline ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-right">Sulje</a>
+
+		<ul data-role="listview">
+			<li><a href="#etusivu" class="ui-btn">Etusivu</a></li>
+			<li><a href="#kameraSivu" class="ui-btn">Kamera</a></li>
+			<li><a href="#saaSivu"  class="ui-btn">Sää</a></li>
+			<li><a href="#etaisyysSivu" class="ui-btn">Etäisyys</a></li>
+			<li><a href="#ruokaSivu" class="ui-btn">Ruoka</a></li>
+		</ul>
+	</div>
+
+	<!-- Vain dynaamiset header ja footer ominaisuudella data-position="fixed" pysyvät paikallaan vilkkumatta, kun sivua vaihdetaan -->
+	<div data-role="header" data-theme="a" data-position="fixed">
+		<h1></h1>
+
+	 	<a href="#popupMenu" data-rel="popup" data-transition="flip" class="ui-btn ui-btn-inline  ui-corner-all ui-icon-bars ui-btn-icon-notext">Menu</a>
+
+		<div data-role="navbar" id="navi">
+			<ul>
+				<li><a href="#etusivu" class="ui-btn ui-icon-home ui-btn-icon-top  ui-mini">Etusivu</a></li>
+				<li><a href="#kameraSivu" class="ui-btn ui-icon-camera ui-btn-icon-top ui-mini">Kamera</a></li>
+				<li><a href="#saaSivu"  class="ui-btn ui-icon-calendar ui-btn-icon-top ui-mini">Sää</a></li>
+				<li><a href="#etaisyysSivu" class="ui-btn ui-icon-gear ui-btn-icon-top ui-mini">Etäisyys</a></li>
+				<li><a href="#ruokaSivu" class="ui-btn ui-icon-bullets ui-btn-icon-top ui-mini">Ruoka</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div data-role="footer" data-theme="b" data-position="fixed">
+		<h4>Mobiiliohjelmointi</h4>
+	</div>
+
+	<div data-role="page" id="etusivu" data-title="Etusivu">
+
+	    <div role="main" class="ui-content ui-body-a">
+
+	    </div> <!-- /content -->
+
+    </div> <!-- /page -->
+
+	<div data-role="page" id="kameraSivu" data-title="Kamera">
+
+	    <div role="main" class="ui-content ui-body-a">
+
+        <script>
+        document.addEventListener("deviceready", onDeviceReady, false);
+        function onDeviceReady() {
+          console.log(navigator.camera);
+        }
+        function getPhotoFromCamera() {
+          navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+          destinationType: Camera.DestinationType.FILE_URI });
+      }
+        function onSuccess(imageURI) {
+        var image = document.getElementById('myImage');
+        image.src = imageURI;
+      }
+
+        function onFail(message) {
+        alert('Failed because: ' + message);
+      }
+
+      </script>
+      <button class="ui-btn ui-btn-inline" id="refresh" type="button" onclick="getPhotoFromCamera()">Ota kuva</button>
+	    </div> <!-- /content -->
+
+    </div> <!-- /page -->
+
+	<div data-role="page" id="saaSivu" data-title="Sää">
+
+	    <div role="main" class="ui-content ui-body-a">
+        <p>Sää Helsingissä</p>
+        <p id="icon"></p>
+        <p id="lampo"></p>
+        <p id="keli"></p>
+        <p id="tuuli"></p>
+        <p id="pilvisyys"></p>
+        <button onclick="onDeviceReady()" type="refresh">nappi</button>
+	    </div> <!-- /content -->
+        <script>
+          document.addEventListener("deviceready", onDeviceReady, false);
+
+          function onDeviceReady() {
+              console.log("navigator.geolocation works well");
+              navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+          }
+          // onSuccess Callback
+          // This method accepts a Position object, which contains the
+          // current GPS coordinates
+          //
+          var onSuccess = function(position) {
+              alert('Latitude: '          + position.coords.latitude          + '\n' +
+                    'Longitude: '         + position.coords.longitude         + '\n' +
+                    'Altitude: '          + position.coords.altitude          + '\n' +
+                    'Accuracy: '          + position.coords.accuracy          + '\n' +
+                    'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+                    'Heading: '           + position.coords.heading           + '\n' +
+                    'Speed: '             + position.coords.speed             + '\n' +
+                    'Timestamp: '         + position.timestamp                + '\n');
+          };
+
+          // onError Callback receives a PositionError object
+          //
+          function onError(error) {
+              alert('code: '    + error.code    + '\n' +
+                    'message: ' + error.message + '\n');
+          }
+
+
+          </script>
+        <script>
+            $(document).on("pagecreate", function() {
+            $(document).on("pagecontainershow", function(){
+                ScaleContentToDevice();
+            });
+            $(window).on("resize orientationchange", function(){
+                ScaleContentToDevice();
+            });
+            function ScaleContentToDevice(){
+                scroll(0, 0);
+                var content = $.mobile.getScreenHeight() - $(".ui-header").outerHeight() - $(".ui-footer").outerHeight() - $(".ui-content").outerHeight() + $(".ui-content").height();
+                $(".ui-content").height(content);
+            }
+            });
+
+
+            $(document).on("pagecreate","#saaSivu", function() {
+                    haeSaa()
+            });
+
+            function haeSaa() {
+            $.ajax({
+                url: "http://api.openweathermap.org/data/2.5/weather?lang=fi&q=helsinki&units=metric&APPID=32f1264bba3945837fa37cc1c29b4db1",
+                dataType: "json",
+                timeout: 5000
+            })
+            .done(function(data) {
+                var iconCode =data.weather[0].icon+".png";
+                $("#icon").html("<img src='http://openweathermap.org/img/w/" + data.weather[0].icon + ".png'>");
+                $("#keli").text(data.weather[0].description);
+                $("#lampo").text("Lämpötila "+data.main.temp+" °C");
+                $("#tuuli").text("Tuuli "+data.wind.speed+" m/s");
+                $("#pilvisyys").text("Pilvisyys "+data.clouds.all+"%");
+            })
+        }
+        </script>
+    </div> <!-- /page -->
+
+	<div data-role="page" id="etaisyysSivu" data-title="Etäisyys">
+
+	    <div role="main" class="ui-content ui-body-a">
+	   <h1>Etäisyys</h1>
+      <form id="gmaps">
+            <p id="tulos"></p>
+            <p>Mistä:</p>
+            <input type="text" id="mista">
+            <p>Minne:</p>
+            <input type="text" id="minne"><br>
+            <button class="ui-btn ui-btn-inline" id="refresh" type="button" onclick="haeEtaisyys();">Hae</button>
+
+      </form>
+      <div id="map">
+          <script>
+          function initMap() {
+        var mista = $("#mista").val();
+        var minne = $("#minne").val();
+        var mapDiv = document.getElementById('map');
+        var map = new google.maps.Map(mapDiv, {
+          center: {lat: 60.169722, lng: 24.938193},
+          zoom: 10
+        });
+          }
+          </script>
+          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3SqRuZqfz0zhFoVIqNWn5jQUHGXjxmNU&callback=initMap"
+          async defer></script>
+      </div>
+      </div> <!-- /content -->
+        <script>
+    $(document).on("pagecreate", "#etaisyysSivu", function haku() {
+    });
+
+    function haeEtaisyys() {
+      var mista = $("#mista").val();
+      var minne = $("#minne").val();
+      console.log(mista+" "+minne);
+        $.ajax({
+                url: "https://maps.googleapis.com/maps/api/distancematrix/json?units=metrics&origins="+mista+"&destinations="+minne+"&key=AIzaSyBF7MzliUCcYYDDCU9bJq5ZULB92BCHDms",
+                dataType: "json",
+                timeout: 5000
+            })
+            .done(function (data) {
+              console.log();
+              $("#tulos").html("Matkan pituus on "+data.rows[0].elements[0].distance.text+" ja matka-aika on "+data.rows[0].elements[0].duration.text);
+            })
+    }
+</script>
+
+    </div> <!-- /page -->
+
+	<div data-role="page" id="ruokaSivu" data-title="Ruoka">
+
+
+	   <div role="main" class="ui-content ui-body-a">
+    <h1>Ruokalista</h1>
+    <p id="ruoka"></p>
+</div>
+<!-- /content -->
+<script>
+    $(document).on("pagecreate", "#ruokaSivu", function () {
+        haeRuoka()
+    });
+
+    function haeRuoka() {
+        $.ajax({
+                url: "http://www.amica.fi/modules/json/json/Index?costNumber=0083&language=fi",
+                dataType: "json",
+                timeout: 5000
+            })
+            .done(function (data) {
+                var lunch = data.MenusForDays[0].SetMenus;
+                var lunchTxt = '';
+                for (var i = 0; i < lunch.length; i++) {
+                    lunchTxt += lunch[i].Components + "<br>";
+                }
+                $("#ruoka").html(lunchTxt);
+            })
+    }
+</script>
+</div>
+<!--/page -->
+
+
+<!--
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+-->
+    <script type="text/javascript">
+
+		$(document).one("pagebeforecreate", function () {
+
+			$( "[data-role='header']" ).enhanceWithin().toolbar(); // Koska on sisältöä
+			$( "[data-role='footer']" ).toolbar();  // WP ei osaa asettaa oikein
+
+			$("#popupMenu").enhanceWithin().popup(); // Koska on sisältöä
+		});
+
+
+		$(document).on("pagecreate", function() {
+
+			$(document).on("pagecontainershow", function(){
+				$(".ui-content").height(getRealContentHeight());
+			})
+
+			$(window).on("resize orientationchange", function(){
+				$(".ui-content").height(getRealContentHeight());
+			})
+
+			function getRealContentHeight() {
+				var activePage = $.mobile.pageContainer.pagecontainer("getActivePage"),
+					screen = $.mobile.getScreenHeight(),
+					header = $(".ui-header").hasClass("ui-header-fixed") ? $(".ui-header").outerHeight() - 1 : $(".ui-header").outerHeight(),
+					footer = $(".ui-footer").hasClass("ui-footer-fixed") ? $(".ui-footer").outerHeight() - 1 : $(".ui-footer").outerHeight(),
+					contentMargins = $(".ui-content", activePage).outerHeight() - $(".ui-content", activePage).height();
+
+				var contentHeight = screen - header - footer - contentMargins;
+
+				return contentHeight;
+			}
+
+			$( document ).on("pagecontainerchange", function() {
+				navi();
+			});
+
+			$("div.ui-page").on("swipeleft", function(event){
+				if(event.handled !== true) {
+					var nextpage = $(this).next("div[data-role='page']");;
+
+					if (nextpage.length == 0) {
+						nextpage = $("div[data-role='page']:first");
+					}
+
+					$.mobile.pageContainer.pagecontainer ("change", nextpage);
+					event.handled = true;
+					navi();
+				}
+				return false;
+			});
+
+			$("div.ui-page").on("swiperight", function(event){
+				if(event.handled !== true) {
+					var prevpage = $(this).prev("div[data-role='page']");
+
+					if (prevpage.length == 0) {
+						prevpage = $("div[data-role='page']:last");
+					}
+
+					$.mobile.pageContainer.pagecontainer ("change", prevpage);
+					event.handled = true;
+					navi();
+				}
+				return false;
+			});
+
+			function navi() {
+				// attribuutti data-title
+				var current = $( ".ui-page-active" ).jqmData( "title" );
+
+				$( "[data-role='header'] h1" ).text( current );
+
+				$( "[data-role='navbar'] a.ui-btn-active" ).removeClass( "ui-btn-active" );
+
+				$( "[data-role='navbar'] a" ).each(function() {
+					if ( $( this ).text() === current ) {
+						$( this ).addClass( "ui-btn-active" );
+					}
+				});
+			}
+		});
+    </script>
+
+</body>
+
+</html>

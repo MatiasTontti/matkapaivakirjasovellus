@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Matkapäiväkirjasovellus</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/[version]/jquery.mobile-[version].min.css" />
+    <script src="http://code.jquery.com/jquery-[version].min.js"></script>
+    <script src="http://code.jquery.com/mobile/[version]/jquery.mobile-[version].min.js"></script>
+</head>
+
+<body>
+
+    <div data-role="page">
+        <div data-role="header">
+            <h1>Matkatapahtuma</h1>
+        </div>
+        <!-- /header -->
+
+        <div role="main" class="ui-content ui-body-a">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="index.html" data-icon="grid" class="ui-btn-active">Kaikki matkatapahtumat</a></li>
+                    <li><a href="matkatapahtuma.html" data-icon="calendar">Uusi matkatapahtuma</a></li>
+                    <li><a href="asetukset.html" data-icon="gear">Asetukset</a></li>
+                    <li><a href="lomake.html" data-icon="star">Rekisteröidy</a></li>
+                </ul>
+            </div>
+            <!-- /navbar -->
+
+            <form>
+
+                <ul data-role="listview" data-inset="true">
+
+                    <li class="ui-field-contain">
+                        <label for="name1">Otsikko</label>
+                        <input type="text" name="name1" id="name1" value="" data-clear-btn="true">
+                    </li>
+
+                    <li class="ui-field-contain">
+                        <label for="name2">Päivä</label>
+                        <input type="text" name="name2" id="name2" value="" data-clear-btn="true">
+                    </li>
+
+                    <li class="ui-field-contain">
+                        <label for="name3">Paikka</label>
+                        <input type="text" name="name3" id="name3" value="" data-clear-btn="true">
+                    </li>
+
+                    <li class="ui-field-contain">
+                        <label for="name4">Sää</label>
+                        <input type="text" name="name4" id="name4" value="" data-clear-btn="true">
+                    </li>
+
+                    <li class="ui-field-contain">
+                        <label for="textarea2">Kuvaus</label>
+                        <textarea cols="40" rows="8" name="textarea2" id="textarea2"></textarea>
+                    </li>
+
+                    <li class="ui-body ui-body-b">
+
+                        <fieldset class="ui-grid-a">
+
+                            <div class="ui-block-b"><button type="submit" class="ui-btn ui-corner-all ui-btn-a">Lisää</button></div>
+                            </fieldset>
+                        </li>
+                    </ul>
+            </form>
+        </div>
+        <!-- /content -->
+
+        <div data-role="footer">
+            <h4>Mobiiliohjelmointi</h4>
+        </div>
+        <!-- /footer -->
+    </div>
+    <!-- /page -->
+
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+﻿<html>
+    <head>
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+        <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+        <!-- datebox -->
+        <link rel="stylesheet" href="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.min.css" />
+        <script type="text/javascript" src="http://cdn.jtsage.com/external/jquery.mousewheel.min.js"></script>
+        <script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.core.min.js"></script>
+        <script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.datebox.min.js"></script>
+        <script type="text/javascript" src="http://cdn.jtsage.com/datebox/i18n/jqm-datebox.lang.utf8.js"></script>
+        <style>
+            label.error {
+                color: red;
+                font-size: 12px;
+                font-weight: normal;
+            }
+        </style>
+    </head>
+
+    <body>
+        // Content here
+        <div data-role="page">
+            <div data-role="header">
+                <h1>Rekisteröidy</h1>
+            </div>
+            <form id="frmCalc">
+                <div data-role="main" class="ui-content">
+                        <label for="username">Käyttäjätunnus</label>
+                        <input name="username" id="username">
+                        <label for="email">Sähköposti</label>
+                        <input name="email" id="email" type="email">
+
+                        <label for="datebox">Anna syntymäpäiväsi</label>
+                        <input name="datebox" type="text" data-role="datebox" data-options='{"mode":"datebox"}'>
+
+                        <label for="password">Salasana</label>
+                        <input id="password" name="password" type="password">
+
+                        <label for="confirmPassword">Vahvista salasana</label>
+                        <input name="confirmPassword" type="password">
+
+                        <input id="submit" type="submit" name="submitForm" value="Lähetä">
+
+                </div>
+            </form>
+            <div data-role="footer">
+                <h1>Mobiiliohjelmointi</h1>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        $("#frmCalc").validate({
+                rules: {
+                    username: {required: true, minlength: 10, maxLength: 30},
+                    email: {required: true},
+                    password: {required: true, minlength: 6},
+                    confirmPassword: {equalTo: "#password"}
+                },
+                submitHandler: function( form ) {
+                    console.log("test");
+                }
+        });
+    </script>
+
+</html>
