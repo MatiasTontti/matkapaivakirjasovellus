@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Matkapäiväkirjasovellus</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/[version]/jquery.mobile-[version].min.css" />
+    <script src="http://code.jquery.com/jquery-[version].min.js"></script>
+    <script src="http://code.jquery.com/mobile/[version]/jquery.mobile-[version].min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+        <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+        <!-- datebox -->
+        <link rel="stylesheet" href="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.min.css" />
+        <script type="text/javascript" src="http://cdn.jtsage.com/external/jquery.mousewheel.min.js"></script>
+        <script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.core.min.js"></script>
+        <script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.datebox.min.js"></script>
+        <script type="text/javascript" src="http://cdn.jtsage.com/datebox/i18n/jqm-datebox.lang.utf8.js"></script>
+</head>
+
+<body>
+  <div data-role="page">
+        <div data-role="header">
+            <h1>Rekisteröidy</h1>
+        </div>
+        <!-- /header -->
+
+        <div role="main" class="ui-content ui-body-a">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="index.html" data-icon="grid" class="ui-btn-active">Kaikki matkatapahtumat</a></li>
+                    <li><a href="matkatapahtuma.html" data-icon="calendar">Uusi matkatapahtuma</a></li>
+                    <li><a href="asetukset.html" data-icon="gear">Asetukset</a></li>
+                    <li><a href="lomake.html" data-icon="star">Rekisteröidy</a></li>
+                </ul>
+            </div>
+            <!-- /navbar -->
+            <form id="rekisteroityminen">
+              <div data-role="main" class="ui-content">
+
+                    <li class="ui-field-contain">
+                        <label for="username">Käyttäjätunnus</label>
+                        <input name="username" id="username" value="" data-clear-btn="true" required minlength="10" maxlength="30">
+                    </li>
+
+                    <li class="ui-field-contain">
+                        <label for="email">Sähköposti</label>
+                        <input type="email" name="email" id="email" value="" data-clear-btn="true" required>
+                    </li>
+
+                    <li class="ui-field-contain">
+                        <label for="password">Salasana</label>
+                        <input type="password" name="password" id="password" value="" data-clear-btn="true">
+                    </li>
+
+                    <li class="ui-field-contain">
+                        <label for="confirmpassword">Vahvista salasana</label>
+                        <input type="password" name="confirmpassword" id="confirmpassword" value="" data-clear-btn="true">
+                    </li>
+
+                    <li class="ui-body ui-body-b">
+
+                        <fieldset class="ui-grid-a">
+
+                            <div class="ui-block-b"><button id="buttonActivate" type="submit" class="ui-btn ui-corner-all ui-btn-a">Lisää</button></div>
+                        </fieldset>
+                    </li>
+                </div>
+            </form>
+
+        </div>
+        <!-- /content -->
+
+        <div data-role="footer">
+            <h4>Mobiiliohjelmointi</h4>
+        </div>
+        <!-- /footer -->
+    </div>
+    <!-- /page -->
+    <script>
+      $(document).ready(function() {
+      $("#rekisteroityminen").validate({
+        rules: {
+            username: {required: true, minlength: 10, maxLength: 30},
+            email: {required: true},
+            password: {required: true, minlength: 6},
+            confirmPassword: {equalTo: "#password"}
+        },
+        submitHandler: function( form ) {
+            console.log("test");
+        }
+});
+      });
+  </script>
+
+</body>
+
+</html>
